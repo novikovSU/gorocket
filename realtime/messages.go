@@ -3,8 +3,8 @@ package realtime
 import (
 	"fmt"
 	"github.com/Jeffail/gabs"
-	"github.com/detached/gorocket/api"
 	"github.com/gopackage/ddp"
+	"github.com/killmeplz/gorocket/api"
 	"log"
 )
 

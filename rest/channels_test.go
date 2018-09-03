@@ -8,7 +8,7 @@ import (
 func TestRocket_GetPublicChannels(t *testing.T) {
 	rocket := getDefaultClient(t)
 
-	channels, err := rocket.GetPublicChannels()
+	channels, err := rocket.ListPublicChannels()
 	assert.Nil(t, err)
 
 	assert.Len(t, channels, 1)
@@ -18,14 +18,10 @@ func TestRocket_GetPublicChannels(t *testing.T) {
 func TestRocket_GetJoinedChannels(t *testing.T) {
 	rocket := getDefaultClient(t)
 
-	channels, err := rocket.GetPublicChannels()
+	channels, err := rocket.ListPublicChannels()
 	assert.Nil(t, err)
 
-	general := getChannel(channels, "general")
-	err = rocket.JoinChannel(general)
-	assert.Nil(t, err)
-
-	channels, err = rocket.GetJoinedChannels()
+	channels, err = rocket.ListJoinedChannels()
 	assert.Nil(t, err)
 
 	assert.Len(t, channels, 1)
@@ -35,12 +31,10 @@ func TestRocket_GetJoinedChannels(t *testing.T) {
 func TestRocket_LeaveChannel(t *testing.T) {
 	rocket := getDefaultClient(t)
 
-	rooms, err := rocket.GetPublicChannels()
+	rooms, err := rocket.ListPublicChannels()
 	assert.Nil(t, err)
 
 	general := getChannel(rooms, "general")
-	err = rocket.JoinChannel(general)
-	assert.Nil(t, err)
 
 	err = rocket.LeaveChannel(general)
 	assert.Nil(t, err)
@@ -49,12 +43,10 @@ func TestRocket_LeaveChannel(t *testing.T) {
 func TestRocket_GetChannelInfo(t *testing.T) {
 	rocket := getDefaultClient(t)
 
-	rooms, err := rocket.GetPublicChannels()
+	rooms, err := rocket.ListPublicChannels()
 	assert.Nil(t, err)
 
 	general := getChannel(rooms, "general")
-	err = rocket.JoinChannel(general)
-	assert.Nil(t, err)
 
 	updatedChannelInfo, err := rocket.GetChannelInfo(general)
 	assert.Nil(t, err)

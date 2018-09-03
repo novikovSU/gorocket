@@ -1,8 +1,8 @@
 package realtime
 
 import (
-	"github.com/detached/gorocket/api"
-	"github.com/detached/gorocket/common_testing"
+	"github.com/killmeplz/gorocket/api"
+	"github.com/killmeplz/gorocket/common_testing"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

@@ -1,22 +1,21 @@
 package rest
 
-
 import (
-	"net/http"
 	"github.com/killmeplz/gorocket/api"
+	"net/http"
 )
 
 type groupsResponse struct {
-	Success  bool          `json:"success"`
-	Groups []api.Group `json:"channels"`
+	Success bool        `json:"success"`
+	Groups  []api.Group `json:"channels"`
 }
 
 type groupResponse struct {
-	Success bool        `json:"success"`
-	Group api.Group `json:"channel"`
+	Success bool      `json:"success"`
+	Group   api.Group `json:"channel"`
 }
 
-func (c *Client) ListGroups() ( []api.Group ,error) {
+func (c *Client) ListGroups() ([]api.Group, error) {
 	request, _ := http.NewRequest("GET", c.getUrl()+"/api/v1/groups.list", nil)
 	response := new(groupsResponse)
 

@@ -32,17 +32,19 @@ type Message struct {
 	Text      string `json:"msg"`
 	Timestamp string `json:"ts"`
 	User      User   `json:"u"`
+	EditedAt string `json:"editedAt,omitempty"`
+	EditedBy User `json:"editedBy,omitempty"`
 }
 
 type Group struct {
-	Id string `json:"_id"`
-	Name string `json:"name"`
-	T string `json:"t"`
-	Msgs int64 `json:"msgs"`
-	U User `json:"u"`
+	Id        string `json:"_id"`
+	Name      string `json:"name"`
+	T         string `json:"t"`
+	Msgs      int64  `json:"msgs"`
+	U         User   `json:"u"`
 	Timestamp string `json:"ts"`
-	Readonly bool `json:"ro"`
-	Sysmes bool `json:"sysMes"`
+	Readonly  bool   `json:"ro"`
+	Sysmes    bool   `json:"sysMes"`
 	UpdatedAt string `json:"_updatedAt"`
 }
 

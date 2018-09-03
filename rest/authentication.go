@@ -3,7 +3,7 @@ package rest
 import (
 	"bytes"
 	"errors"
-	"github.com/detached/gorocket/api"
+	"github.com/killmeplz/gorocket/api"
 	"net/http"
 	"net/url"
 )

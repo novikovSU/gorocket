@@ -1,9 +1,9 @@
 package rest
 
 import (
-	"github.com/detached/gorocket/api"
-	"github.com/detached/gorocket/common_testing"
-	"github.com/detached/gorocket/realtime"
+	"github.com/killmeplz/gorocket/api"
+	"github.com/killmeplz/gorocket/common_testing"
+	"github.com/killmeplz/gorocket/realtime"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
