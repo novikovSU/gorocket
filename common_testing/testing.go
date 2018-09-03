@@ -1,8 +1,8 @@
 package common_testing
 
 import (
-	"time"
 	"math/rand"
+	"time"
 )
 
 const (

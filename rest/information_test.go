@@ -1,13 +1,13 @@
 package rest
 
 import (
-	"testing"
-	"github.com/stretchr/testify/assert"
 	"github.com/detached/gorocket/common_testing"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestRocket_GetServerInfo(t *testing.T) {
-	rocket := Client{Protocol:common_testing.Protocol, Host:common_testing.Host, Port:common_testing.Port}
+	rocket := Client{Protocol: common_testing.Protocol, Host: common_testing.Host, Port: common_testing.Port}
 
 	info, err := rocket.GetServerInfo()
 

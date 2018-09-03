@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/detached/gorocket/realtime"
-	"github.com/detached/gorocket/api"
 	"fmt"
+	"github.com/detached/gorocket/api"
+	"github.com/detached/gorocket/realtime"
 )
 
 func main() {
 	// Create new realtime client
 	c, _ := realtime.NewClient("127.0.0.1", "3000", false)
-	// close the client 
+	// close the client
 	defer c.Close()
 
 	// Login an existing user
@@ -29,5 +29,4 @@ func main() {
 	fmt.Println(<-messageChannel)
 	fmt.Println(<-messageChannel)
 
-	
 }

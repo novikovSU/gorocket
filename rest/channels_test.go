@@ -1,8 +1,8 @@
 package rest
 
 import (
-	"testing"
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestRocket_GetPublicChannels(t *testing.T) {

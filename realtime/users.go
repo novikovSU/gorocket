@@ -7,7 +7,7 @@ import (
 )
 
 type ddpLoginRequest struct {
-	User     ddpUser `json:"user"`
+	User     ddpUser     `json:"user"`
 	Password ddpPassword `json:"password"`
 }
 
@@ -23,7 +23,6 @@ type ddpPassword struct {
 	Digest    string `json:"digest"`
 	Algorithm string `json:"algorithm"`
 }
-
 
 // Register a new user on the server. This function does not need a logged in user. The registered user gets logged in
 // to set its username.
@@ -49,13 +48,13 @@ func (c *Client) RegisterUser(credentials *api.UserCredentials) error {
 // Login a user. The password and the email are not allowed to be nil.
 //
 // https://rocket.chat/docs/developer-guides/realtime-api/method-calls/login/
-func (c *Client) Login(credentials *api.UserCredentials) (error) {
+func (c *Client) Login(credentials *api.UserCredentials) error {
 
 	digest := sha256.Sum256([]byte(credentials.Password))
 
 	_, err := c.ddp.Call("login", ddpLoginRequest{
 		User:     ddpUser{Email: credentials.Email},
-		Password: ddpPassword{Digest: hex.EncodeToString(digest[:]), Algorithm:"sha-256"}})
+		Password: ddpPassword{Digest: hex.EncodeToString(digest[:]), Algorithm: "sha-256"}})
 
 	return err
 }

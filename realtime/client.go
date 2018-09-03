@@ -2,14 +2,14 @@
 package realtime
 
 import (
-	"github.com/gopackage/ddp"
 	"fmt"
+	"github.com/gopackage/ddp"
 	"math/rand"
 	"time"
 )
 
 type Client struct {
-	ddp      *ddp.Client
+	ddp *ddp.Client
 }
 
 // Creates a new instance and connects to the websocket.
@@ -17,7 +17,7 @@ func NewClient(host, port string, debug bool) (*Client, error) {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	c := new(Client)
-	c.ddp = ddp.NewClient(fmt.Sprintf("ws://%v:%v/websocket", host, port), "http://" + host)
+	c.ddp = ddp.NewClient(fmt.Sprintf("ws://%v:%v/websocket", host, port), "http://"+host)
 
 	if debug {
 		c.ddp.SetSocketLogActive(true)

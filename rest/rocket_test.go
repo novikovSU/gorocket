@@ -1,18 +1,18 @@
 package rest
 
 import (
-	"testing"
-	"github.com/stretchr/testify/assert"
-	"github.com/detached/gorocket/realtime"
-	"github.com/detached/gorocket/common_testing"
 	"github.com/detached/gorocket/api"
+	"github.com/detached/gorocket/common_testing"
+	"github.com/detached/gorocket/realtime"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 var (
-	testUserName string
+	testUserName  string
 	testUserEmail string
-	testPassword = "test"
-	rocketClient *Client
+	testPassword  = "test"
+	rocketClient  *Client
 )
 
 func getDefaultClient(t *testing.T) *Client {
@@ -28,7 +28,7 @@ func getDefaultClient(t *testing.T) *Client {
 
 func getAuthenticatedClient(t *testing.T, name, email, password string) *Client {
 	client := Client{Protocol: common_testing.Protocol, Host: common_testing.Host, Port: common_testing.Port}
-	credentials := api.UserCredentials{Name:name, Email:email, Password:password}
+	credentials := api.UserCredentials{Name: name, Email: email, Password: password}
 
 	rtClient, err := realtime.NewClient(common_testing.Host, common_testing.Port, true)
 	assert.Nil(t, err)

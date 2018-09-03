@@ -1,8 +1,8 @@
 package rest
 
 import (
-	"net/http"
 	"github.com/detached/gorocket/api"
+	"net/http"
 )
 
 type infoResponse struct {
@@ -14,7 +14,7 @@ type infoResponse struct {
 //
 // https://rocket.chat/docs/developer-guides/rest-api/miscellaneous/info
 func (c *Client) GetServerInfo() (*api.Info, error) {
-	request, _ := http.NewRequest("GET", c.getUrl() + "/api/v1/info", nil)
+	request, _ := http.NewRequest("GET", c.getUrl()+"/api/v1/info", nil)
 
 	response := new(infoResponse)
 

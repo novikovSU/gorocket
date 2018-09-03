@@ -1,11 +1,11 @@
 package realtime
 
 import (
-	"github.com/gopackage/ddp"
+	"fmt"
 	"github.com/Jeffail/gabs"
 	"github.com/detached/gorocket/api"
+	"github.com/gopackage/ddp"
 	"log"
-	"fmt"
 )
 
 const (

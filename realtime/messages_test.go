@@ -1,9 +1,9 @@
 package realtime
 
 import (
-	"testing"
-	"github.com/stretchr/testify/assert"
 	"github.com/detached/gorocket/api"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestClient_SubscribeToMessageStream(t *testing.T) {
@@ -32,7 +32,7 @@ func TestClient_SubscribeToMessageStream(t *testing.T) {
 }
 func assertMessage(t *testing.T, message api.Message) {
 	assert.NotNil(t, message.Id, "Id was not set")
-	assert.Equal(t, "GENERAL", message.ChannelId,"Wrong channel id")
+	assert.Equal(t, "GENERAL", message.ChannelId, "Wrong channel id")
 	assert.NotNil(t, message.Timestamp, "Timestamp was not set")
 	assert.NotNil(t, message.User.Id, "UserId was not set")
 	assert.NotNil(t, message.User.UserName, "Username was not set")

@@ -1,22 +1,22 @@
 package rest
 
 import (
-	"fmt"
 	"bytes"
-	"net/http"
-	"html"
+	"fmt"
 	"github.com/detached/gorocket/api"
+	"html"
+	"net/http"
 )
 
 type messagesResponse struct {
 	statusResponse
-	ChannelName string `json:"channel"`
+	ChannelName string        `json:"channel"`
 	Messages    []api.Message `json:"messages"`
 }
 
 type messageResponse struct {
 	statusResponse
-	ChannelName string `json:"channel"`
+	ChannelName string      `json:"channel"`
 	Message     api.Message `json:"message"`
 }
 
