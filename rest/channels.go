@@ -7,14 +7,22 @@ import (
 	"net/http"
 )
 
-type channelsResponse struct {
+type ChannelsResponse struct {
 	Success  bool          `json:"success"`
 	Channels []api.Channel `json:"channels"`
 }
 
-type channelResponse struct {
+type ChannelResponse struct {
 	Success bool        `json:"success"`
 	Channel api.Channel `json:"channel"`
+}
+
+type Channel struct {
+	client *Client
+}
+
+func (c *Client) Channel() *Channel {
+	return &Channel{ client : c }
 }
 
 // Returns all channels that can be seen by the logged in user.
@@ -22,7 +30,7 @@ type channelResponse struct {
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list
 func (c *Client) ListPublicChannels() ([]api.Channel, error) {
 	request, _ := http.NewRequest("GET", c.getUrl()+"/api/v1/channels.list", nil)
-	response := new(channelsResponse)
+	response := new(ChannelsResponse)
 
 	if err := c.doRequest(request, response); err != nil {
 		return nil, err
@@ -36,7 +44,7 @@ func (c *Client) ListPublicChannels() ([]api.Channel, error) {
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list-joined
 func (c *Client) ListJoinedChannels() ([]api.Channel, error) {
 	request, _ := http.NewRequest("GET", c.getUrl()+"/api/v1/channels.list.joined", nil)
-	response := new(channelsResponse)
+	response := new(ChannelsResponse)
 
 	if err := c.doRequest(request, response); err != nil {
 		return nil, err
@@ -44,7 +52,6 @@ func (c *Client) ListJoinedChannels() ([]api.Channel, error) {
 
 	return response.Channels, nil
 }
-
 
 // Leaves a channel. The id of the channel has to be not nil.
 //
@@ -55,15 +62,21 @@ func (c *Client) LeaveChannel(channel *api.Channel) error {
 	return c.doRequest(request, new(statusResponse))
 }
 
+type ChannelGetInfoOptions struct {
+	RoomId string `json:"roomId,omitempty"`
+	RoomName string `json:"roomName,omitempty"`
+}
+
 // Get information about a channel. That might be useful to update the usernames.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/info
-func (c *Client) GetChannelInfo(channel *api.Channel) (*api.Channel, error) {
-	var url = fmt.Sprintf("%s/api/v1/channels.info?roomId=%s", c.getUrl(), channel.Id)
+func (c *Channel) Info(opts *ChannelGetInfoOptions) (*api.Channel, error) {
+	room , nameOrId := IdOrName(opts.RoomId,opts.RoomName)
+	var url = fmt.Sprintf("%s/api/v1/channels.info?%s=%s", c.client.getUrl(), room, nameOrId )
 	request, _ := http.NewRequest("GET", url, nil)
-	response := new(channelResponse)
+	response := new(ChannelResponse)
 
-	if err := c.doRequest(request, response); err != nil {
+	if err := c.client.doRequest(request, response); err != nil {
 		return nil, err
 	}
 
@@ -74,7 +87,7 @@ func (c *Client) GetChannelInfo(channel *api.Channel) (*api.Channel, error) {
 // count can be specified to limit the size of the returned messages.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/history
-func (c *Client) ChannelHistory (channel *api.Channel, page *Page) ([]api.Message, error) {
+func (c *Client) ChannelHistory(channel *api.Channel, page *Page) ([]api.Message, error) {
 	u := fmt.Sprintf("%s/api/v1/channels.history?roomId=%s", c.getUrl(), channel.Id)
 
 	if page != nil {
@@ -82,7 +95,7 @@ func (c *Client) ChannelHistory (channel *api.Channel, page *Page) ([]api.Messag
 	}
 
 	request, _ := http.NewRequest("GET", u, nil)
-	response := new(messagesResponse)
+	response := new(MessagesResponse)
 
 	if err := c.doRequest(request, response); err != nil {
 		return nil, err

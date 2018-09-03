@@ -32,6 +32,15 @@ type statusResponse struct {
 	Message string `json:"message"`
 }
 
+//helper function to choose between RoomID and ChannelName
+func IdOrName(id, name string) (_type, value string) {
+	if name != "" {
+		return "roomName", name
+	} else {
+		return "roomId", id
+	}
+}
+
 func NewClient(host, port string, tls, debug bool) *Client {
 	var protocol string
 

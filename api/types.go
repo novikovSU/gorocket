@@ -15,6 +15,10 @@ type Channel struct {
 	SysMes    bool   `json:"sysMes"`
 }
 
+//TODO: finish
+type Attachment struct {
+}
+
 type User struct {
 	Id       string `json:"_id"`
 	UserName string `json:"username"`
@@ -32,8 +36,8 @@ type Message struct {
 	Text      string `json:"msg"`
 	Timestamp string `json:"ts"`
 	User      User   `json:"u"`
-	EditedAt string `json:"editedAt,omitempty"`
-	EditedBy User `json:"editedBy,omitempty"`
+	EditedAt  string `json:"editedAt,omitempty"`
+	EditedBy  User   `json:"editedBy,omitempty"`
 }
 
 type Group struct {
