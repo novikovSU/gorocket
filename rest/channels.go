@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/killmeplz/gorocket/api"
 	"net/http"
+	"encoding/json"
+	"github.com/google/go-querystring/query"
 )
 
 type ChannelsResponse struct {
@@ -23,6 +25,11 @@ type Channel struct {
 
 func (c *Client) Channel() *Channel {
 	return &Channel{ client : c }
+}
+
+type ChannelOptions struct {
+	RoomId string `json:"roomId,omitempty"`
+	RoomName string `json:"roomName,omitempty"`
 }
 
 // Returns all channels that can be seen by the logged in user.
@@ -53,24 +60,30 @@ func (c *Client) ListJoinedChannels() ([]api.Channel, error) {
 	return response.Channels, nil
 }
 
+
+type ChannelLeaveOptions struct {
+	RoomId string `json:"roomId,omitempty"`
+}
 // Leaves a channel. The id of the channel has to be not nil.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/leave
-func (c *Client) LeaveChannel(channel *api.Channel) error {
-	var body = fmt.Sprintf(`{ "roomId": "%s"}`, channel.Id)
-	request, _ := http.NewRequest("POST", c.getUrl()+"/api/v1/channels.leave", bytes.NewBufferString(body))
-	return c.doRequest(request, new(statusResponse))
+func (c *Channel) Leave(opts *ChannelLeaveOptions) (*ChannelResponse , error) {
+	data, err := json.Marshal(&opts)
+	if err != nil {
+		return nil,err
+	}
+	request, _ := http.NewRequest("POST", c.client.getUrl()+"/api/v1/channels.leave", bytes.NewBuffer(data))
+	var resp ChannelResponse
+	err = c.client.doRequest(request, resp)
+	return &resp, err
 }
 
-type ChannelGetInfoOptions struct {
-	RoomId string `json:"roomId,omitempty"`
-	RoomName string `json:"roomName,omitempty"`
-}
+
 
 // Get information about a channel. That might be useful to update the usernames.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/info
-func (c *Channel) Info(opts *ChannelGetInfoOptions) (*api.Channel, error) {
+func (c *Channel) Info(opts *ChannelOptions) (*api.Channel, error) {
 	room , nameOrId := IdOrName(opts.RoomId,opts.RoomName)
 	var url = fmt.Sprintf("%s/api/v1/channels.info?%s=%s", c.client.getUrl(), room, nameOrId )
 	request, _ := http.NewRequest("GET", url, nil)
@@ -83,21 +96,31 @@ func (c *Channel) Info(opts *ChannelGetInfoOptions) (*api.Channel, error) {
 	return &response.Channel, nil
 }
 
+type ChannelHistoryOptions struct {
+	RoomId string `url:"roomId"`
+	Latest string `url:"latest,omitempty"`
+	Oldest string `url:"oldest,omitempty"`
+	Inclusive bool `url:"inclusive,omitempty"`
+	Count int64 `url:"count,omitempty"`
+	Unreads bool `url:"unreads,omitempty"`
+
+}
+
 // Get messages from a channel. The channel id has to be not nil. Optionally a
 // count can be specified to limit the size of the returned messages.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/history
-func (c *Client) ChannelHistory(channel *api.Channel, page *Page) ([]api.Message, error) {
-	u := fmt.Sprintf("%s/api/v1/channels.history?roomId=%s", c.getUrl(), channel.Id)
-
-	if page != nil {
-		u = fmt.Sprintf("%s&count=%d", u, page.Count)
+func (c *Channel) History(opts *ChannelHistoryOptions) ([]api.Message, error) {
+	vals , err := query.Values(opts)
+	if err != nil {
+		return nil, err
 	}
+	url := fmt.Sprintf("%s/api/v1/channels.history?%s", c.client.getUrl(), vals.Encode())
 
-	request, _ := http.NewRequest("GET", u, nil)
+	request, _ := http.NewRequest("GET", url, nil)
 	response := new(MessagesResponse)
 
-	if err := c.doRequest(request, response); err != nil {
+	if err := c.client.doRequest(request, response); err != nil {
 		return nil, err
 	}
 

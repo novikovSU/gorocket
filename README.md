@@ -111,7 +111,7 @@ For more information checkout the [rest-godoc](https://godoc.org/github.com/kill
 	- [ ] chat.delete
 	- [ ] chat.getMessage
 	- [ ] chat.pinMessage
-	- [ ] chat.postMessage
+	- [X] chat.postMessage
 	- [ ] chat.react
 	- [ ] chat.reportMessage
 	- [ ] chat.search
@@ -119,7 +119,7 @@ For more information checkout the [rest-godoc](https://godoc.org/github.com/kill
 	- [ ] chat.sendMessage
 	- [ ] chat.unPinMessage
 	- [ ] chat.unStarMessage
-	- [ ] chat.update
+	- [X] chat.update
 	- [ ] chat.getMessageReadReceipts
 - IM
 	- [ ] im.close
