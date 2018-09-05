@@ -19,8 +19,40 @@ type Channel struct {
 type Attachment struct {
 }
 
+type Room struct {
+	Id string `json:"_id"`
+	Type string `json:"t"`
+	Name string `json:"name,omitempty"`
+}
+
+type Subscription struct {
+	Type          string `json:"t"`
+	TimeStamp     string `json:"ts"`
+	Name          string `json:"name"`
+	Fname         string `json:"fname,omitempty"`
+	RoomId        string `json:"rid"`
+	User          User   `json:"u"`
+	Open          bool   `json:"open"`
+	Alert         bool   `json:"alert"`
+	Unread        int64  `json:"unread"`
+	UserMentions  int64  `json:"userMentions"`
+	GroupMentions int64  `json:"groupMentions"`
+	UpdatedAt     string `json:"_updatedAt"`
+	Id            string `json:"_id"`
+}
+
+type ReadReceipt struct {
+	Id        string `json:"_id"`
+	RoomId    string `json:"roomId"`
+	UserId    string `json:"userId"`
+	MessageId string `json:"messageId"`
+	TimeStamp string `json:"ts"`
+	User      User   `json:"user"`
+}
+
 type User struct {
 	Id       string `json:"_id"`
+	Name     string `json:"name"`
 	UserName string `json:"username"`
 }
 

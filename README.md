@@ -63,8 +63,8 @@ For more information checkout the [rest-godoc](https://godoc.org/github.com/kill
 	- [ ] channels.files
 	- [ ] channels.getAllUserMentionsByChannel
 	- [ ] channels.getIntegrations
-	- [ ] channels.history
-	- [ ] channels.info
+	- [X] channels.history
+	- [X] channels.info
 	- [ ] channels.invite
 	- [ ] channels.kick
 	- [X] channels.leave
@@ -120,12 +120,12 @@ For more information checkout the [rest-godoc](https://godoc.org/github.com/kill
 	- [ ] chat.unPinMessage
 	- [ ] chat.unStarMessage
 	- [X] chat.update
-	- [ ] chat.getMessageReadReceipts
+	- [X] chat.getMessageReadReceipts
 - IM
 	- [ ] im.close
 	- [ ] im.counters
 	- [ ] im.create
-	- [ ] im.history
+	- [X] im.history
 	- [ ] im.files
 	- [ ] im.members
 	- [ ] im.messages.others
@@ -139,7 +139,7 @@ For more information checkout the [rest-godoc](https://godoc.org/github.com/kill
 - Rooms
 	- [ ] rooms.cleanHistory
 	- [ ] rooms.favorite
-	- [ ] rooms.get
+	- [X] rooms.get
 	- [ ] rooms.saveNotification
 	- [ ] rooms.upload/:rid
 - Command Methods
@@ -157,7 +157,7 @@ For more information checkout the [rest-godoc](https://godoc.org/github.com/kill
 	- [ ] service.configurations
     - [ ] settings/:_id
 - Subscriptions
-	- [ ] subscriptions.get
+	- [X] subscriptions.get
 	- [ ] subscriptions.getOne
-	- [ ] subscriptions.read
+	- [X] subscriptions.read
 	- [ ] subscriptions.unread

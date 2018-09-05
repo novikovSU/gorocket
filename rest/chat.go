@@ -63,6 +63,21 @@ func (c *Chat) Post(opts *ChatPostOptions) (*MessageResponse, error) {
 	return response, err
 }
 
+type ReceiptsResponse struct {
+	Receipts []api.ReadReceipt `json:"receipts"`
+	Success  bool              `json:"success"`
+}
+
+func (c *Chat) GetMessageReadReceipts(msgId string) ([]api.ReadReceipt, error) {
+	req, _ := http.NewRequest(
+		http.MethodGet,
+		c.client.getUrl()+"/api/v1/chat.getMessageReadReceipts?messageId="+msgId,
+		nil)
+	resp := new(ReceiptsResponse)
+	err := c.client.doRequest(req, resp)
+	return resp.Receipts, err
+}
+
 // UpdateMessage Payload
 //
 // https://rocket.chat/docs/developer-guides/rest-api/chat/update/

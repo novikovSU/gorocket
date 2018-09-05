@@ -26,6 +26,10 @@ type authInfo struct {
 	id    string
 }
 
+type SuccessResponse struct {
+	Success bool `json:"success"`
+}
+
 // The base for the most of the json responses
 type statusResponse struct {
 	Status  string `json:"status"`
