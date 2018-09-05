@@ -68,8 +68,8 @@ For more information checkout the [rest-godoc](https://godoc.org/github.com/kill
 	- [ ] channels.invite
 	- [ ] channels.kick
 	- [X] channels.leave
-	- [ ] channels.list
-	- [ ] channels.list.joined
+	- [X] channels.list
+	- [X] channels.list.joined
 	- [ ] channels.members
 	- [ ] channels.open
 	- [ ] channels.rename

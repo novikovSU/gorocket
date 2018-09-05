@@ -1,9 +1,9 @@
 package rest
 
 import (
-	"github.com/killmeplz/gorocket/api"
-	"github.com/google/go-querystring/query"
 	"fmt"
+	"github.com/google/go-querystring/query"
+	"github.com/killmeplz/gorocket/api"
 	"net/http"
 )
 
@@ -12,7 +12,7 @@ type IM struct {
 }
 
 func (c *Client) Im() *IM {
-	return &IM{client:c}
+	return &IM{client: c}
 }
 
 type ImHistoryOptions struct {

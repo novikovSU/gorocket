@@ -35,11 +35,11 @@ type ChannelOptions struct {
 // Returns all channels that can be seen by the logged in user.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list
-func (c *Client) ListPublicChannels() ([]api.Channel, error) {
-	request, _ := http.NewRequest("GET", c.getUrl()+"/api/v1/channels.list", nil)
+func (c *Channel) List() ([]api.Channel, error) {
+	request, _ := http.NewRequest("GET", c.client.getUrl()+"/api/v1/channels.list", nil)
 	response := new(ChannelsResponse)
 
-	if err := c.doRequest(request, response); err != nil {
+	if err := c.client.doRequest(request, response); err != nil {
 		return nil, err
 	}
 
@@ -49,11 +49,11 @@ func (c *Client) ListPublicChannels() ([]api.Channel, error) {
 // Returns all channels that the user has joined.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list-joined
-func (c *Client) ListJoinedChannels() ([]api.Channel, error) {
-	request, _ := http.NewRequest("GET", c.getUrl()+"/api/v1/channels.list.joined", nil)
+func (c *Channel) ListJoined() ([]api.Channel, error) {
+	request, _ := http.NewRequest("GET", c.client.getUrl()+"/api/v1/channels.list.joined", nil)
 	response := new(ChannelsResponse)
 
-	if err := c.doRequest(request, response); err != nil {
+	if err := c.client.doRequest(request, response); err != nil {
 		return nil, err
 	}
 
@@ -82,8 +82,11 @@ func (c *Channel) Leave(opts *ChannelLeaveOptions) (*ChannelResponse, error) {
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/info
 func (c *Channel) Info(opts *ChannelOptions) (*api.Channel, error) {
-	room, nameOrId := IdOrName(opts.RoomId, opts.RoomName)
-	var url = fmt.Sprintf("%s/api/v1/channels.info?%s=%s", c.client.getUrl(), room, nameOrId)
+	vals, err := query.Values(opts)
+	if err != nil {
+		return nil, err
+	}
+	var url = fmt.Sprintf("%s/api/v1/channels.info?%s", c.client.getUrl(), vals.Encode())
 	request, _ := http.NewRequest("GET", url, nil)
 	response := new(ChannelResponse)
 

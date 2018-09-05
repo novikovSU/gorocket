@@ -20,7 +20,7 @@ type Attachment struct {
 }
 
 type Room struct {
-	Id string `json:"_id"`
+	Id   string `json:"_id"`
 	Type string `json:"t"`
 	Name string `json:"name,omitempty"`
 }
