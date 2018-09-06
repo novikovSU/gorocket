@@ -68,6 +68,7 @@ type Message struct {
 	Text      string `json:"msg"`
 	Timestamp string `json:"ts"`
 	User      User   `json:"u"`
+	Mentions  []User `json:"mentions,omitempty"`
 	EditedAt  string `json:"editedAt,omitempty"`
 	EditedBy  User   `json:"editedBy,omitempty"`
 }

@@ -97,20 +97,11 @@ func (c *Channel) Info(opts *ChannelOptions) (*api.Channel, error) {
 	return &response.Channel, nil
 }
 
-type ChannelHistoryOptions struct {
-	RoomId    string `url:"roomId"`
-	Latest    string `url:"latest,omitempty"`
-	Oldest    string `url:"oldest,omitempty"`
-	Inclusive bool   `url:"inclusive,omitempty"`
-	Count     int64  `url:"count,omitempty"`
-	Unreads   bool   `url:"unreads,omitempty"`
-}
-
 // Get messages from a channel. The channel id has to be not nil. Optionally a
 // count can be specified to limit the size of the returned messages.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/history
-func (c *Channel) History(opts *ChannelHistoryOptions) ([]api.Message, error) {
+func (c *Channel) History(opts *HistoryOptions) ([]api.Message, error) {
 	vals, err := query.Values(opts)
 	if err != nil {
 		return nil, err

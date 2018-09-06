@@ -15,16 +15,7 @@ func (c *Client) Im() *IM {
 	return &IM{client: c}
 }
 
-type ImHistoryOptions struct {
-	RoomId    string `url:"roomId"`
-	Latest    string `url:"latest,omitempty"`
-	Oldest    string `url:"oldest,omitempty"`
-	Inclusive bool   `url:"inclusive,omitempty"`
-	Count     int64  `url:"count,omitempty"`
-	Unreads   bool   `url:"unreads,omitempty"`
-}
-
-func (i *IM) History(opts *ImHistoryOptions) ([]api.Message, error) {
+func (i *IM) History(opts *HistoryOptions) ([]api.Message, error) {
 	vals, err := query.Values(opts)
 	if err != nil {
 		return nil, err

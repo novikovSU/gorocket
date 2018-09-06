@@ -56,16 +56,7 @@ func (g *Groups) Info(opts *GroupsInfoOptions) (*api.Group, error) {
 	return &response.Group, err
 }
 
-type GroupsHistoryOptions struct {
-	RoomId    string `url:"roomId"`
-	Latest    string `url:"latest,omitempty"`
-	Oldest    string `url:"oldest,omitempty"`
-	Inclusive bool   `url:"inclusive,omitempty"`
-	Count     int64  `url:"count,omitempty"`
-	Unreads   bool   `url:"unreads,omitempty"`
-}
-
-func (g *Groups) History(opts *GroupsHistoryOptions) ([]api.Message, error) {
+func (g *Groups) History(opts *HistoryOptions) ([]api.Message, error) {
 	vals, err := query.Values(opts)
 	if err != nil {
 		return nil, err
