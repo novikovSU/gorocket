@@ -1,5 +1,7 @@
 package api
 
+import "time"
+
 type Channel struct {
 	Id           string   `json:"_id"`
 	Name         string   `json:"name"`
@@ -15,8 +17,37 @@ type Channel struct {
 	SysMes    bool   `json:"sysMes"`
 }
 
-//TODO: finish
 type Attachment struct {
+	Color       string `json:"color,omitempty"`
+	Text        string `json:"text,omitempty"`
+	Timestamp   string `json:"ts,omitempty"`
+	ThumbURL    string `json:"thumb_url,omitempty"`
+	MessageLink string `json:"message_link,omitempty"`
+	Collapsed   bool   `json:"collapsed"`
+
+	AuthorName string `json:"author_name,omitempty"`
+	AuthorLink string `json:"author_link,omitempty"`
+	AuthorIcon string `json:"author_icon,omitempty"`
+
+	Title             string `json:"title,omitempty"`
+	TitleLink         string `json:"title_link,omitempty"`
+	TitleLinkDownload string `json:"title_link_download,omitempty"`
+
+	ImageURL string `json:"image_url,omitempty"`
+
+	AudioURL string `json:"audio_url,omitempty"`
+	VideoURL string `json:"video_url,omitempty"`
+
+	Fields []AttachmentField `json:"fields,omitempty"`
+}
+
+// AttachmentField Payload for postmessage rest API
+//
+// https://rocket.chat/docs/developer-guides/rest-api/chat/postmessage/
+type AttachmentField struct {
+	Short bool   `json:"short"`
+	Title string `json:"title"`
+	Value string `json:"value"`
 }
 
 type Room struct {
@@ -27,7 +58,7 @@ type Room struct {
 
 type Subscription struct {
 	Type          string `json:"t"`
-	TimeStamp     string `json:"ts"`
+	TimeStamp     *time.Time `json:"ts"`
 	Name          string `json:"name"`
 	Fname         string `json:"fname,omitempty"`
 	RoomId        string `json:"rid"`
@@ -46,14 +77,18 @@ type ReadReceipt struct {
 	RoomId    string `json:"roomId"`
 	UserId    string `json:"userId"`
 	MessageId string `json:"messageId"`
-	TimeStamp string `json:"ts"`
+	TimeStamp *time.Time `json:"ts"`
 	User      User   `json:"user"`
 }
 
 type User struct {
-	Id       string `json:"_id"`
-	Name     string `json:"name"`
-	UserName string `json:"username"`
+	Id string `json:"_id"`
+	Type string `json:"type,omitempty"`
+	Status string `json:"status,omitempty"`
+	Active bool `json:"active,omitempty"`
+	Name string `json:"name,omitempty"`
+	UtcOffset float64 `json:"utcOffset,omitempty"`
+	UserName string `json:"username,omitempty"`
 }
 
 type UserCredentials struct {
@@ -66,11 +101,12 @@ type Message struct {
 	Id        string `json:"_id"`
 	ChannelId string `json:"rid"`
 	Text      string `json:"msg"`
-	Timestamp string `json:"ts"`
+	Timestamp *time.Time `json:"ts"`
 	User      User   `json:"u"`
 	Mentions  []User `json:"mentions,omitempty"`
-	EditedAt  string `json:"editedAt,omitempty"`
+	EditedAt  *time.Time `json:"editedAt,omitempty"`
 	EditedBy  User   `json:"editedBy,omitempty"`
+	Attachments []Attachment `json:"attachments,omitempty"`
 }
 
 type Group struct {
@@ -79,7 +115,7 @@ type Group struct {
 	T         string `json:"t"`
 	Msgs      int64  `json:"msgs"`
 	U         User   `json:"u"`
-	Timestamp string `json:"ts"`
+	Timestamp *time.Time `json:"ts"`
 	Readonly  bool   `json:"ro"`
 	Sysmes    bool   `json:"sysMes"`
 	UpdatedAt string `json:"_updatedAt"`
