@@ -11,7 +11,7 @@ func TestRocket_LoginLogout(t *testing.T) {
 	_, logoutErr := client.Logout()
 	assert.Nil(t, logoutErr)
 
-	channels, err := client.GetJoinedChannels()
+	channels, err := client.Channel().ListJoined()
 	assert.Nil(t, channels)
 	assert.NotNil(t, err)
 }

@@ -1,10 +1,10 @@
 package rest
 
 import (
-	"github.com/google/go-querystring/query"
 	"fmt"
-	"net/http"
+	"github.com/google/go-querystring/query"
 	"github.com/killmeplz/gorocket/api"
+	"net/http"
 )
 
 type Users struct {
@@ -12,11 +12,11 @@ type Users struct {
 }
 
 func (c *Client) Users() *Users {
-	return &Users{client:c}
+	return &Users{client: c}
 }
 
 type UsersInfoOptions struct {
-	UserId string `url:"userId,omitempty"`
+	UserId   string `url:"userId,omitempty"`
 	UserName string `url:"username,omitempty"`
 }
 
@@ -25,7 +25,7 @@ type UserInfoResponse struct {
 	SuccessResponse
 }
 
-func (u *Users) Info(opts *UsersInfoOptions) (*api.User, error) {
+func (u *Users) Info(opts *UsersInfoOptions) (*UserInfoResponse, error) {
 	vals, err := query.Values(opts)
 	if err != nil {
 		return nil, err
@@ -38,5 +38,5 @@ func (u *Users) Info(opts *UsersInfoOptions) (*api.User, error) {
 		return nil, err
 	}
 
-	return response.User, nil
+	return response, nil
 }

@@ -16,3 +16,7 @@ type HistoryOptions struct {
 type History interface {
 	History(options *HistoryOptions) ([]api.Message, error)
 }
+
+type SuccessResponse struct {
+	Success bool `json:"success"`
+}

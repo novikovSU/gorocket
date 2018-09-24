@@ -10,11 +10,11 @@ func main() {
 	// Create a gorocket rest client
 	c := rest.NewClient("127.0.0.1", "3000", false, false)
 	// close client
-	defer c.Close()
+	//defer c.Close()
 
 	// No login needed to get the server versions
-	info, _ := c.GetServerInfo()
-	log.Println("Server version: ", info.Version)
+	info, _ := c.Misc().GetServerInfo()
+	log.Println("Server version: ", info.Info.Version)
 
 	// Login an existing user
 	if err := c.Login(api.UserCredentials{Email: "test@mail.com", Password: "test"}); err != nil {
@@ -22,26 +22,25 @@ func main() {
 	}
 
 	// Get all visible channels
-	channels, _ := c.GetPublicChannels()
+	channels, _ := c.Channel().List()
 	log.Println("All visible channels: ", channels)
 
 	// Join the general channel
 	general := getChannelById(channels, "GENERAL")
-	c.JoinChannel(general)
 
 	// Get all joined channels
-	joined, _ := c.GetJoinedChannels()
+	joined, _ := c.Channel().ListJoined()
 	log.Println("We are in the following channels: ", joined)
 
 	// Send a message
-	c.Send(general, "I am a go program!")
+	c.Chat().Post(&rest.ChatPostOptions{RoomId: general.Id, Text: "Test"})
 
 	// Get the last messages from the general channel
-	messages, _ := c.GetMessages(general, nil)
+	messages, _ := c.Channel().History(&rest.HistoryOptions{RoomId: general.Id})
 	log.Println("Last messages: ", messages)
 
 	// Leave the general channel
-	c.LeaveChannel(general)
+	c.Channel().Leave(&rest.ChannelLeaveOptions{RoomId: general.Id})
 
 	// Logout the user
 	c.Logout()

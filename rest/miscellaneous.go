@@ -5,22 +5,31 @@ import (
 	"net/http"
 )
 
-type infoResponse struct {
+type Misc struct {
+	client *Client
+}
+
+func (c *Client) Misc() *Misc {
+	return &Misc{client: c}
+}
+
+type ServerInfoResponse struct {
 	Info api.Info `json:"info"`
+	SuccessResponse
 }
 
 // Get information about the server.
 // This function does not need a logged in user.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/miscellaneous/info
-func (c *Client) GetServerInfo() (*api.Info, error) {
-	request, _ := http.NewRequest("GET", c.getUrl()+"/api/v1/info", nil)
+func (m *Misc) GetServerInfo() (*ServerInfoResponse, error) {
+	req, _ := http.NewRequest("GET", m.client.getUrl()+"/api/v1/info", nil)
 
-	response := new(infoResponse)
+	resp := new(ServerInfoResponse)
 
-	if err := c.doRequest(request, response); err != nil {
+	if err := m.client.doRequest(req, resp); err != nil {
 		return nil, err
 	}
 
-	return &response.Info, nil
+	return resp, nil
 }

@@ -9,7 +9,8 @@ import (
 func TestRocket_GetServerInfo(t *testing.T) {
 	rocket := Client{Protocol: common_testing.Protocol, Host: common_testing.Host, Port: common_testing.Port}
 
-	info, err := rocket.GetServerInfo()
+	resp, err := rocket.Misc().GetServerInfo()
+	info := resp.Info
 
 	assert.Nil(t, err)
 	assert.NotNil(t, info)

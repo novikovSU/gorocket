@@ -20,11 +20,11 @@ type RoomResponse struct {
 	SuccessResponse
 }
 
-func (r *Rooms) Get() ([]api.Room, error) {
+func (r *Rooms) Get() (*RoomResponse, error) {
 	var url = fmt.Sprintf("%s/api/v1/rooms.get", r.client.getUrl())
-	request, _ := http.NewRequest("GET", url, nil)
-	response := new(RoomResponse)
+	req, _ := http.NewRequest("GET", url, nil)
+	resp := new(RoomResponse)
 
-	err := r.client.doRequest(request, response)
-	return response.Update, err
+	err := r.client.doRequest(req, resp)
+	return resp, err
 }

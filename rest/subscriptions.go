@@ -51,9 +51,9 @@ func (s *Subscriptions) Get(opts *SubscriptionGetOptions) (*SubscriptionsGetResp
 	url := fmt.Sprintf("%s/api/v1/subscriptions.get?%s", s.client.getUrl(), vals.Encode())
 
 	request, _ := http.NewRequest(http.MethodGet, url, nil)
-	response := new(SubscriptionsGetResponse)
+	resp := new(SubscriptionsGetResponse)
 
-	err = s.client.doRequest(request, response)
+	err = s.client.doRequest(request, resp)
 
-	return response, err
+	return resp, err
 }

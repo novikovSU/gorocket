@@ -57,38 +57,38 @@ type Room struct {
 }
 
 type Subscription struct {
-	Type          string `json:"t"`
+	Type          string     `json:"t"`
 	TimeStamp     *time.Time `json:"ts"`
-	Name          string `json:"name"`
-	Fname         string `json:"fname,omitempty"`
-	RoomId        string `json:"rid"`
-	User          User   `json:"u"`
-	Open          bool   `json:"open"`
-	Alert         bool   `json:"alert"`
-	Unread        int64  `json:"unread"`
-	UserMentions  int64  `json:"userMentions"`
-	GroupMentions int64  `json:"groupMentions"`
-	UpdatedAt     string `json:"_updatedAt"`
-	Id            string `json:"_id"`
+	Name          string     `json:"name"`
+	Fname         string     `json:"fname,omitempty"`
+	RoomId        string     `json:"rid"`
+	User          User       `json:"u"`
+	Open          bool       `json:"open"`
+	Alert         bool       `json:"alert"`
+	Unread        int64      `json:"unread"`
+	UserMentions  int64      `json:"userMentions"`
+	GroupMentions int64      `json:"groupMentions"`
+	UpdatedAt     string     `json:"_updatedAt"`
+	Id            string     `json:"_id"`
 }
 
 type ReadReceipt struct {
-	Id        string `json:"_id"`
-	RoomId    string `json:"roomId"`
-	UserId    string `json:"userId"`
-	MessageId string `json:"messageId"`
+	Id        string     `json:"_id"`
+	RoomId    string     `json:"roomId"`
+	UserId    string     `json:"userId"`
+	MessageId string     `json:"messageId"`
 	TimeStamp *time.Time `json:"ts"`
-	User      User   `json:"user"`
+	User      User       `json:"user"`
 }
 
 type User struct {
-	Id string `json:"_id"`
-	Type string `json:"type,omitempty"`
-	Status string `json:"status,omitempty"`
-	Active bool `json:"active,omitempty"`
-	Name string `json:"name,omitempty"`
+	Id        string  `json:"_id"`
+	Type      string  `json:"type,omitempty"`
+	Status    string  `json:"status,omitempty"`
+	Active    bool    `json:"active,omitempty"`
+	Name      string  `json:"name,omitempty"`
 	UtcOffset float64 `json:"utcOffset,omitempty"`
-	UserName string `json:"username,omitempty"`
+	UserName  string  `json:"username,omitempty"`
 }
 
 type UserCredentials struct {
@@ -98,27 +98,27 @@ type UserCredentials struct {
 }
 
 type Message struct {
-	Id        string `json:"_id"`
-	ChannelId string `json:"rid"`
-	Text      string `json:"msg"`
-	Timestamp *time.Time `json:"ts"`
-	User      User   `json:"u"`
-	Mentions  []User `json:"mentions,omitempty"`
-	EditedAt  *time.Time `json:"editedAt,omitempty"`
-	EditedBy  User   `json:"editedBy,omitempty"`
+	Id          string       `json:"_id"`
+	ChannelId   string       `json:"rid"`
+	Text        string       `json:"msg"`
+	Timestamp   *time.Time   `json:"ts"`
+	User        User         `json:"u"`
+	Mentions    []User       `json:"mentions,omitempty"`
+	EditedAt    *time.Time   `json:"editedAt,omitempty"`
+	EditedBy    User         `json:"editedBy,omitempty"`
 	Attachments []Attachment `json:"attachments,omitempty"`
 }
 
 type Group struct {
-	Id        string `json:"_id"`
-	Name      string `json:"name"`
-	T         string `json:"t"`
-	Msgs      int64  `json:"msgs"`
-	U         User   `json:"u"`
+	Id        string     `json:"_id"`
+	Name      string     `json:"name"`
+	T         string     `json:"t"`
+	Msgs      int64      `json:"msgs"`
+	U         User       `json:"u"`
 	Timestamp *time.Time `json:"ts"`
-	Readonly  bool   `json:"ro"`
-	Sysmes    bool   `json:"sysMes"`
-	UpdatedAt string `json:"_updatedAt"`
+	Readonly  bool       `json:"ro"`
+	Sysmes    bool       `json:"sysMes"`
+	UpdatedAt string     `json:"_updatedAt"`
 }
 
 type Info struct {
