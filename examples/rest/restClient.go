@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/killmeplz/gorocket/api"
-	"github.com/killmeplz/gorocket/rest"
+	"github.com/novikovSU/gorocket/api"
+	"github.com/novikovSU/gorocket/rest"
 	"log"
 )
 

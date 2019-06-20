@@ -2,7 +2,7 @@ package rest
 
 import (
 	"fmt"
-	"github.com/killmeplz/gorocket/api"
+	"github.com/novikovSU/gorocket/api"
 	"net/http"
 )
 

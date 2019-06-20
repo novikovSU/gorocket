@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/killmeplz/gorocket/api"
-	"github.com/killmeplz/gorocket/realtime"
+
+	"github.com/novikovSU/gorocket/api"
+	"github.com/novikovSU/gorocket/realtime"
 )
 
 func main() {

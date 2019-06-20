@@ -3,7 +3,7 @@ package realtime
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"github.com/killmeplz/gorocket/api"
+	"github.com/novikovSU/gorocket/api"
 )
 
 type ddpLoginRequest struct {

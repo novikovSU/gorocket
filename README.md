@@ -1,7 +1,7 @@
 # gorocket
 
-[![Build Status](https://travis-ci.org/killmeplz/gorocket.svg?branch=master)](https://travis-ci.org/killmeplz/gorocket)
-[![Coverage Status](https://coveralls.io/repos/github/killmeplz/gorocket/badge.svg?branch=master)](https://coveralls.io/github/killmeplz/gorocket?branch=master)
+[![Build Status](https://travis-ci.org/novikovSU/gorocket.svg?branch=master)](https://travis-ci.org/novikovSU/gorocket)
+[![Coverage Status](https://coveralls.io/repos/github/novikovSU/gorocket/badge.svg?branch=master)](https://coveralls.io/github/novikovSU/gorocket?branch=master)
 
 RocketChat client for golang. Compatible to the rest API of version 0.48.2.
 
@@ -11,11 +11,11 @@ I will not update the lib because I am not using RocketChat any more.
 RocketChat provides a rest and a realtime interface. This library provides clients for both.
 
 ```text
-go get github.com/killmeplz/gorocket/rest
-go get github.com/killmeplz/gorocket/realtime
+go get github.com/novikovSU/gorocket/rest
+go get github.com/novikovSU/gorocket/realtime
 ```
 
-For more information checkout the [rest-godoc](https://godoc.org/github.com/killmeplz/gorocket/rest) and [realtime-godoc](https://godoc.org/github.com/killmeplz/gorocket/realtime), the test files or the examples.
+For more information checkout the [rest-godoc](https://godoc.org/github.com/novikovSU/gorocket/rest) and [realtime-godoc](https://godoc.org/github.com/novikovSU/gorocket/realtime), the test files or the examples.
 
 ## REST API functionality (TODO)
 

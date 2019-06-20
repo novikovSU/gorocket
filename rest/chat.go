@@ -3,7 +3,7 @@ package rest
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/killmeplz/gorocket/api"
+	"github.com/novikovSU/gorocket/api"
 	"net/http"
 )
 

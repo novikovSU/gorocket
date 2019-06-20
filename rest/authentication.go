@@ -3,9 +3,10 @@ package rest
 import (
 	"bytes"
 	"errors"
-	"github.com/killmeplz/gorocket/api"
 	"net/http"
 	"net/url"
+
+	"github.com/novikovSU/gorocket/api"
 )
 
 type logoutResponse struct {
@@ -19,7 +20,7 @@ type logonResponse struct {
 	statusResponse
 	Data struct {
 		Token  string `json:"authToken"`
-		UserId string `json:"userId"`
+		UserID string `json:"userId"`
 	} `json:"data"`
 }
 
@@ -38,7 +39,7 @@ func (c *Client) Login(credentials api.UserCredentials) error {
 	}
 
 	if response.Status == "success" {
-		c.auth = &authInfo{id: response.Data.UserId, token: response.Data.Token}
+		c.auth = &authInfo{id: response.Data.UserID, token: response.Data.Token}
 		return nil
 	} else {
 		return errors.New("Response status: " + response.Status)

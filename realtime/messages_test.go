@@ -1,7 +1,7 @@
 package realtime
 
 import (
-	"github.com/killmeplz/gorocket/api"
+	"github.com/novikovSU/gorocket/api"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

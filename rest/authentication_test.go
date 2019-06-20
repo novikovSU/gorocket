@@ -1,9 +1,10 @@
 package rest
 
 import (
-	"github.com/killmeplz/gorocket/common_testing"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/novikovSU/gorocket/common_testing"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRocket_LoginLogout(t *testing.T) {

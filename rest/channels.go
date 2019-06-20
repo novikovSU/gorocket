@@ -4,35 +4,41 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/google/go-querystring/query"
-	"github.com/killmeplz/gorocket/api"
 	"net/http"
+
+	"github.com/google/go-querystring/query"
+	"github.com/novikovSU/gorocket/api"
 )
 
+// ChannelsResponse is a technical struct
 type ChannelsResponse struct {
 	Success  bool          `json:"success"`
 	Channels []api.Channel `json:"channels"`
 }
 
+// ChannelResponse is a technical struct
 type ChannelResponse struct {
 	Success bool        `json:"success"`
 	Channel api.Channel `json:"channel"`
 }
 
+// Channel is a technical struct
 type Channel struct {
 	client *Client
 }
 
+// Channel is a technical method
 func (c *Client) Channel() *Channel {
 	return &Channel{client: c}
 }
 
+// ChannelOptions technical struct
 type ChannelOptions struct {
-	RoomId   string `json:"roomId,omitempty"`
+	RoomID   string `json:"roomId,omitempty"`
 	RoomName string `json:"roomName,omitempty"`
 }
 
-// Returns all channels that can be seen by the logged in user.
+// List returns all channels that can be seen by the logged in user.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list
 func (c *Channel) List() ([]api.Channel, error) {
@@ -46,7 +52,7 @@ func (c *Channel) List() ([]api.Channel, error) {
 	return response.Channels, nil
 }
 
-// Returns all channels that the user has joined.
+// ListJoined returns all channels that the user has joined.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list-joined
 func (c *Channel) ListJoined() ([]api.Channel, error) {
@@ -60,11 +66,12 @@ func (c *Channel) ListJoined() ([]api.Channel, error) {
 	return response.Channels, nil
 }
 
+// ChannelLeaveOptions technical struct
 type ChannelLeaveOptions struct {
-	RoomId string `json:"roomId,omitempty"`
+	RoomID string `json:"roomId,omitempty"`
 }
 
-// Leaves a channel. The id of the channel has to be not nil.
+// Leave is a method to leave a channel. The id of the channel has to be not nil.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/leave
 func (c *Channel) Leave(opts *ChannelLeaveOptions) (*ChannelResponse, error) {
@@ -78,7 +85,7 @@ func (c *Channel) Leave(opts *ChannelLeaveOptions) (*ChannelResponse, error) {
 	return &resp, err
 }
 
-// Get information about a channel. That might be useful to update the usernames.
+// Info get information about a channel. That might be useful to update the usernames.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/info
 func (c *Channel) Info(opts *ChannelOptions) (*api.Channel, error) {
@@ -97,7 +104,7 @@ func (c *Channel) Info(opts *ChannelOptions) (*api.Channel, error) {
 	return &response.Channel, nil
 }
 
-// Get messages from a channel. The channel id has to be not nil. Optionally a
+// History is a method to get messages from a channel. The channel id has to be not nil. Optionally a
 // count can be specified to limit the size of the returned messages.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/history

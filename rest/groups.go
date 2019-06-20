@@ -3,7 +3,7 @@ package rest
 import (
 	"fmt"
 	"github.com/google/go-querystring/query"
-	"github.com/killmeplz/gorocket/api"
+	"github.com/novikovSU/gorocket/api"
 	"net/http"
 )
 

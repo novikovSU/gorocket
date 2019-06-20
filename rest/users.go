@@ -4,7 +4,7 @@ import (
 	"github.com/google/go-querystring/query"
 	"fmt"
 	"net/http"
-	"github.com/killmeplz/gorocket/api"
+	"github.com/novikovSU/gorocket/api"
 )
 
 type Users struct {

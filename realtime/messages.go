@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/Jeffail/gabs"
 	"github.com/gopackage/ddp"
-	"github.com/killmeplz/gorocket/api"
+	"github.com/novikovSU/gorocket/api"
 	"log"
 )
 

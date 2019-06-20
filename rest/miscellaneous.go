@@ -1,7 +1,7 @@
 package rest
 
 import (
-	"github.com/killmeplz/gorocket/api"
+	"github.com/novikovSU/gorocket/api"
 	"net/http"
 )
 
