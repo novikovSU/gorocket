@@ -4,8 +4,9 @@ import (
 	"github.com/novikovSU/gorocket/api"
 )
 
+// HistoryOptions AAA
 type HistoryOptions struct {
-	RoomId    string `url:"roomId"`
+	RoomID    string `url:"roomId"`
 	Latest    string `url:"latest,omitempty"`
 	Oldest    string `url:"oldest,omitempty"`
 	Inclusive bool   `url:"inclusive,omitempty"`
@@ -13,6 +14,7 @@ type HistoryOptions struct {
 	Unreads   bool   `url:"unreads,omitempty"`
 }
 
+// History AAA
 type History interface {
 	History(options *HistoryOptions) ([]api.Message, error)
 }

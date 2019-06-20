@@ -2,9 +2,10 @@ package rest
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/google/go-querystring/query"
 	"github.com/novikovSU/gorocket/api"
-	"net/http"
 )
 
 // IM technical struct
@@ -17,13 +18,13 @@ func (c *Client) Im() *IM {
 	return &IM{client: c}
 }
 
-// History 
+// History AAA
 func (i *IM) History(opts *HistoryOptions) ([]api.Message, error) {
 	vals, err := query.Values(opts)
 	if err != nil {
 		return nil, err
 	}
-	url := fmt.Sprintf("%s/api/v1/im.history?%s", i.client.getUrl(), vals.Encode())
+	url := fmt.Sprintf("%s/api/v1/im.history?%s", i.client.getURL(), vals.Encode())
 
 	req, _ := http.NewRequest("GET", url, nil)
 	resp := new(MessagesResponse)

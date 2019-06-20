@@ -1,20 +1,21 @@
 package rest
 
 import (
-	"github.com/novikovSU/gorocket/api"
 	"net/http"
+
+	"github.com/novikovSU/gorocket/api"
 )
 
 type infoResponse struct {
 	Info api.Info `json:"info"`
 }
 
-// Get information about the server.
+// GetServerInfo gets information about the server.
 // This function does not need a logged in user.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/miscellaneous/info
 func (c *Client) GetServerInfo() (*api.Info, error) {
-	request, _ := http.NewRequest("GET", c.getUrl()+"/api/v1/info", nil)
+	request, _ := http.NewRequest("GET", c.getURL()+"/api/v1/info", nil)
 
 	response := new(infoResponse)
 

@@ -1,36 +1,42 @@
 package rest
 
 import (
-	"github.com/google/go-querystring/query"
 	"fmt"
 	"net/http"
+
+	"github.com/google/go-querystring/query"
 	"github.com/novikovSU/gorocket/api"
 )
 
+// Users AAA
 type Users struct {
 	client *Client
 }
 
+// Users AAA
 func (c *Client) Users() *Users {
-	return &Users{client:c}
+	return &Users{client: c}
 }
 
+// UsersInfoOptions AAA
 type UsersInfoOptions struct {
-	UserId string `url:"userId,omitempty"`
+	UserID   string `url:"userId,omitempty"`
 	UserName string `url:"username,omitempty"`
 }
 
+// UserInfoResponse AAA
 type UserInfoResponse struct {
 	User *api.User `json:"user"`
 	SuccessResponse
 }
 
+// Info AAA
 func (u *Users) Info(opts *UsersInfoOptions) (*api.User, error) {
 	vals, err := query.Values(opts)
 	if err != nil {
 		return nil, err
 	}
-	var url = fmt.Sprintf("%s/api/v1/users.info?%s", u.client.getUrl(), vals.Encode())
+	var url = fmt.Sprintf("%s/api/v1/users.info?%s", u.client.getURL(), vals.Encode())
 	request, _ := http.NewRequest("GET", url, nil)
 	response := new(UserInfoResponse)
 

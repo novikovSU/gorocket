@@ -1,4 +1,4 @@
-// This package provides a RocketChat rest client.
+// Package rest provides a RocketChat rest client.
 package rest
 
 import (
@@ -10,6 +10,7 @@ import (
 	"net/http"
 )
 
+// Client AAA
 type Client struct {
 	Protocol string
 	Host     string
@@ -26,6 +27,7 @@ type authInfo struct {
 	id    string
 }
 
+// SuccessResponse AAA
 type SuccessResponse struct {
 	Success bool `json:"success"`
 }
@@ -36,15 +38,15 @@ type statusResponse struct {
 	Message string `json:"message"`
 }
 
-//helper function to choose between RoomID and ChannelName
-func IdOrName(id, name string) (_type, value string) {
+// IDOrName helps other functions to choose between RoomID and ChannelName
+func IDOrName(id, name string) (_type, value string) {
 	if name != "" {
 		return "roomName", name
-	} else {
-		return "roomId", id
 	}
+	return "roomId", id
 }
 
+// NewClient AAA
 func NewClient(host, port string, tls, debug bool) *Client {
 	var protocol string
 
@@ -57,7 +59,7 @@ func NewClient(host, port string, tls, debug bool) *Client {
 	return &Client{Host: host, Port: port, Protocol: protocol, Debug: debug}
 }
 
-func (c *Client) getUrl() string {
+func (c *Client) getURL() string {
 	return fmt.Sprintf("%v://%v:%v", c.Protocol, c.Host, c.Port)
 }
 

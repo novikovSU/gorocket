@@ -42,7 +42,7 @@ type ChannelOptions struct {
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list
 func (c *Channel) List() ([]api.Channel, error) {
-	request, _ := http.NewRequest("GET", c.client.getUrl()+"/api/v1/channels.list", nil)
+	request, _ := http.NewRequest("GET", c.client.getURL()+"/api/v1/channels.list", nil)
 	response := new(ChannelsResponse)
 
 	if err := c.client.doRequest(request, response); err != nil {
@@ -56,7 +56,7 @@ func (c *Channel) List() ([]api.Channel, error) {
 //
 // https://rocket.chat/docs/developer-guides/rest-api/channels/list-joined
 func (c *Channel) ListJoined() ([]api.Channel, error) {
-	request, _ := http.NewRequest("GET", c.client.getUrl()+"/api/v1/channels.list.joined", nil)
+	request, _ := http.NewRequest("GET", c.client.getURL()+"/api/v1/channels.list.joined", nil)
 	response := new(ChannelsResponse)
 
 	if err := c.client.doRequest(request, response); err != nil {
@@ -79,7 +79,7 @@ func (c *Channel) Leave(opts *ChannelLeaveOptions) (*ChannelResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	request, _ := http.NewRequest("POST", c.client.getUrl()+"/api/v1/channels.leave", bytes.NewBuffer(data))
+	request, _ := http.NewRequest("POST", c.client.getURL()+"/api/v1/channels.leave", bytes.NewBuffer(data))
 	var resp ChannelResponse
 	err = c.client.doRequest(request, resp)
 	return &resp, err
@@ -93,7 +93,7 @@ func (c *Channel) Info(opts *ChannelOptions) (*api.Channel, error) {
 	if err != nil {
 		return nil, err
 	}
-	var url = fmt.Sprintf("%s/api/v1/channels.info?%s", c.client.getUrl(), vals.Encode())
+	var url = fmt.Sprintf("%s/api/v1/channels.info?%s", c.client.getURL(), vals.Encode())
 	request, _ := http.NewRequest("GET", url, nil)
 	response := new(ChannelResponse)
 
@@ -113,7 +113,7 @@ func (c *Channel) History(opts *HistoryOptions) ([]api.Message, error) {
 	if err != nil {
 		return nil, err
 	}
-	url := fmt.Sprintf("%s/api/v1/channels.history?%s", c.client.getUrl(), vals.Encode())
+	url := fmt.Sprintf("%s/api/v1/channels.history?%s", c.client.getURL(), vals.Encode())
 
 	request, _ := http.NewRequest("GET", url, nil)
 	response := new(MessagesResponse)

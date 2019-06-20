@@ -2,9 +2,10 @@ package rest
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/google/go-querystring/query"
 	"github.com/novikovSU/gorocket/api"
-	"net/http"
 )
 
 type groupsResponse struct {
@@ -17,16 +18,19 @@ type groupResponse struct {
 	Group   api.Group `json:"group"`
 }
 
+// Groups AAA
 type Groups struct {
 	client *Client
 }
 
+// Groups AAA
 func (client *Client) Groups() *Groups {
 	return &Groups{client: client}
 }
 
+// ListGroups AAA
 func (g *Groups) ListGroups() ([]api.Group, error) {
-	request, _ := http.NewRequest(http.MethodGet, g.client.getUrl()+"/api/v1/groups.list", nil)
+	request, _ := http.NewRequest(http.MethodGet, g.client.getURL()+"/api/v1/groups.list", nil)
 	response := new(groupsResponse)
 
 	if err := g.client.doRequest(request, response); err != nil {
@@ -36,17 +40,19 @@ func (g *Groups) ListGroups() ([]api.Group, error) {
 	return response.Groups, nil
 }
 
+// GroupsInfoOptions AAA
 type GroupsInfoOptions struct {
-	RoomId   string `url:"roomId,omitempty"`
+	RoomID   string `url:"roomId,omitempty"`
 	RoomName string `url:"roomName,omitempty"`
 }
 
+// Info AAA
 func (g *Groups) Info(opts *GroupsInfoOptions) (*api.Group, error) {
 	vals, err := query.Values(opts)
 	if err != nil {
 		return nil, err
 	}
-	var url = fmt.Sprintf("%s/api/v1/groups.info?%s", g.client.getUrl(), vals.Encode())
+	var url = fmt.Sprintf("%s/api/v1/groups.info?%s", g.client.getURL(), vals.Encode())
 	request, _ := http.NewRequest(http.MethodGet, url, nil)
 	response := new(groupResponse)
 
@@ -56,12 +62,13 @@ func (g *Groups) Info(opts *GroupsInfoOptions) (*api.Group, error) {
 	return &response.Group, err
 }
 
+// History AAA
 func (g *Groups) History(opts *HistoryOptions) ([]api.Message, error) {
 	vals, err := query.Values(opts)
 	if err != nil {
 		return nil, err
 	}
-	url := fmt.Sprintf("%s/api/v1/groups.history?%s", g.client.getUrl(), vals.Encode())
+	url := fmt.Sprintf("%s/api/v1/groups.history?%s", g.client.getURL(), vals.Encode())
 
 	request, _ := http.NewRequest(http.MethodGet, url, nil)
 	response := new(MessagesResponse)
