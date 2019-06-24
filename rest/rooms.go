@@ -30,7 +30,7 @@ type RoomResponse struct {
 type RoomsUploadOptions struct {
 	RoomID      string `json:"rid"`
 	File        string `json:"file"`
-	Messager    string `json:"msg,omitempty"`
+	Message    string `json:"msg,omitempty"`
 	Description string `json:"description,omitempty"`
 }
 
