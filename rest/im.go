@@ -37,7 +37,7 @@ func (i *IM) List() ([]api.IM, error) {
 	request, _ := http.NewRequest("GET", i.client.getURL()+"/api/v1/im.list", nil)
 	response := new(ImsResponse)
 
-	if err := c.client.doRequest(request, response); err != nil {
+	if err := i.client.doRequest(request, response); err != nil {
 		return nil, err
 	}
 
