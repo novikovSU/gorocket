@@ -2,9 +2,13 @@ package rest
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
+	"io"
+	"mime/multipart"
 	"net/http"
+	"os"
+	"path"
+	"path/filepath"
 
 	"github.com/novikovSU/gorocket/api"
 )
@@ -28,9 +32,9 @@ type RoomResponse struct {
 
 // RoomsUploadOptions AAA
 type RoomsUploadOptions struct {
-//	RoomID      string `json:"rid"`
+	//	RoomID      string `json:"rid"`
 	File        string `json:"file"`
-	Message    string `json:"msg,omitempty"`
+	Message     string `json:"msg,omitempty"`
 	Description string `json:"description,omitempty"`
 }
 
@@ -43,14 +47,26 @@ type RoomsUploadResponse struct {
 //
 // https://rocket.chat/docs/developer-guides/rest-api/rooms/upload/
 func (r *Rooms) Upload(roomID string, opts *RoomsUploadOptions) (*RoomsUploadResponse, error) {
-	data, err := json.Marshal(&opts)
-	if err != nil {
-		return nil, err
-	}
-	request, _ := http.NewRequest("POST", r.client.getURL()+"/api/v1/rooms.upload/"+roomID, bytes.NewBuffer(data))
+	fileDir, _ := os.Getwd()
+	fileName := opts.File
+	filePath := path.Join(fileDir, fileName)
+
+	file, _ := os.Open(filePath)
+	defer file.Close()
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, _ := writer.CreateFormFile("file", filepath.Base(file.Name()))
+	io.Copy(part, file)
+	_ = writer.WriteField("msg", opts.Message)
+	_ = writer.WriteField("description", opts.Description)
+	writer.Close()
+
+	request, _ := http.NewRequest("POST", r.client.getURL()+"/api/v1/rooms.upload/"+roomID, body)
+	request.Header.Add("Content-Type", writer.FormDataContentType())
 
 	response := new(RoomsUploadResponse)
-	err = r.client.doRequest(request, response)
+	err := r.client.doRequest(request, response)
 
 	return response, err
 }
