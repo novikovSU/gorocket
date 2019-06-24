@@ -2,8 +2,21 @@ package api
 
 import "time"
 
+// IM AAA
+type IM struct {
+	ID           string `json:"_id"`
+	MessageCount int    `json:"msgs"`
+	UserName     string `json:"username,omitempty"`
+	Timestamp    string `json:"ts"`
+	Lm           string `json:"lm"`
+	T            string `json:"t"`
+	UpdatedAt    string `json:"_updatedAt"`
+	Topic        string `json:"topic,omitempty"`
+}
+
+// Channel AAA
 type Channel struct {
-	Id           string   `json:"_id"`
+	ID           string   `json:"_id"`
 	Name         string   `json:"name"`
 	MessageCount int      `json:"msgs"`
 	UserNames    []string `json:"usernames"`
@@ -17,6 +30,7 @@ type Channel struct {
 	SysMes    bool   `json:"sysMes"`
 }
 
+// Attachment AAA
 type Attachment struct {
 	Color       string `json:"color,omitempty"`
 	Text        string `json:"text,omitempty"`
@@ -50,77 +64,85 @@ type AttachmentField struct {
 	Value string `json:"value"`
 }
 
+// Room AAA
 type Room struct {
-	Id   string `json:"_id"`
+	ID   string `json:"_id"`
 	Type string `json:"t"`
 	Name string `json:"name,omitempty"`
 }
 
+// Subscription AAA
 type Subscription struct {
-	Type          string `json:"t"`
+	Type          string     `json:"t"`
 	TimeStamp     *time.Time `json:"ts"`
-	Name          string `json:"name"`
-	Fname         string `json:"fname,omitempty"`
-	RoomId        string `json:"rid"`
-	User          User   `json:"u"`
-	Open          bool   `json:"open"`
-	Alert         bool   `json:"alert"`
-	Unread        int64  `json:"unread"`
-	UserMentions  int64  `json:"userMentions"`
-	GroupMentions int64  `json:"groupMentions"`
-	UpdatedAt     string `json:"_updatedAt"`
-	Id            string `json:"_id"`
+	Name          string     `json:"name"`
+	Fname         string     `json:"fname,omitempty"`
+	RoomID        string     `json:"rid"`
+	User          User       `json:"u"`
+	Open          bool       `json:"open"`
+	Alert         bool       `json:"alert"`
+	Unread        int64      `json:"unread"`
+	UserMentions  int64      `json:"userMentions"`
+	GroupMentions int64      `json:"groupMentions"`
+	UpdatedAt     string     `json:"_updatedAt"`
+	ID            string     `json:"_id"`
 }
 
+// ReadReceipt AAA
 type ReadReceipt struct {
-	Id        string `json:"_id"`
-	RoomId    string `json:"roomId"`
-	UserId    string `json:"userId"`
-	MessageId string `json:"messageId"`
+	ID        string     `json:"_id"`
+	RoomID    string     `json:"roomId"`
+	UserID    string     `json:"userId"`
+	MessageID string     `json:"messageId"`
 	TimeStamp *time.Time `json:"ts"`
-	User      User   `json:"user"`
+	User      User       `json:"user"`
 }
 
+// User AAA
 type User struct {
-	Id string `json:"_id"`
-	Type string `json:"type,omitempty"`
-	Status string `json:"status,omitempty"`
-	Active bool `json:"active,omitempty"`
-	Name string `json:"name,omitempty"`
+	ID        string  `json:"_id"`
+	Type      string  `json:"type,omitempty"`
+	Status    string  `json:"status,omitempty"`
+	Active    bool    `json:"active,omitempty"`
+	Name      string  `json:"name,omitempty"`
 	UtcOffset float64 `json:"utcOffset,omitempty"`
-	UserName string `json:"username,omitempty"`
+	UserName  string  `json:"username,omitempty"`
 }
 
+// UserCredentials AAA
 type UserCredentials struct {
 	Email    string `json:"email"`
 	Name     string `json:"name"`
 	Password string `json:"pass"`
 }
 
+// Message AAA
 type Message struct {
-	Id        string `json:"_id"`
-	ChannelId string `json:"rid"`
-	Text      string `json:"msg"`
-	Timestamp *time.Time `json:"ts"`
-	User      User   `json:"u"`
-	Mentions  []User `json:"mentions,omitempty"`
-	EditedAt  *time.Time `json:"editedAt,omitempty"`
-	EditedBy  User   `json:"editedBy,omitempty"`
+	ID          string       `json:"_id"`
+	ChannelID   string       `json:"rid"`
+	Text        string       `json:"msg"`
+	Timestamp   *time.Time   `json:"ts"`
+	User        User         `json:"u"`
+	Mentions    []User       `json:"mentions,omitempty"`
+	EditedAt    *time.Time   `json:"editedAt,omitempty"`
+	EditedBy    User         `json:"editedBy,omitempty"`
 	Attachments []Attachment `json:"attachments,omitempty"`
 }
 
+// Group AAA
 type Group struct {
-	Id        string `json:"_id"`
-	Name      string `json:"name"`
-	T         string `json:"t"`
-	Msgs      int64  `json:"msgs"`
-	U         User   `json:"u"`
+	ID        string     `json:"_id"`
+	Name      string     `json:"name"`
+	T         string     `json:"t"`
+	Msgs      int64      `json:"msgs"`
+	U         User       `json:"u"`
 	Timestamp *time.Time `json:"ts"`
-	Readonly  bool   `json:"ro"`
-	Sysmes    bool   `json:"sysMes"`
-	UpdatedAt string `json:"_updatedAt"`
+	Readonly  bool       `json:"ro"`
+	Sysmes    bool       `json:"sysMes"`
+	UpdatedAt string     `json:"_updatedAt"`
 }
 
+// Info AAA
 type Info struct {
 	Version string `json:"version"`
 
@@ -132,7 +154,7 @@ type Info struct {
 		OsRelease   string `json:"osRelease"`
 		TotalMemory int64  `json:"totalMemory"`
 		FreeMemory  int64  `json:"freeMemory"`
-		CpuCount    int    `json:"cpus"`
+		CPUCount    int    `json:"cpus"`
 	} `json:"build"`
 
 	Travis struct {

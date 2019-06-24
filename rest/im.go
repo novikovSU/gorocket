@@ -8,6 +8,18 @@ import (
 	"github.com/novikovSU/gorocket/api"
 )
 
+// ImsResponse is a technical struct
+type ImsResponse struct {
+	Success bool     `json:"success"`
+	Ims     []api.IM `json:"ims"`
+}
+
+// ImResponse is a technical struct
+type ImResponse struct {
+	Success bool   `json:"success"`
+	IM      api.IM `json:"im"`
+}
+
 // IM technical struct
 type IM struct {
 	client *Client
@@ -16,6 +28,20 @@ type IM struct {
 // Im function for getting client object
 func (c *Client) Im() *IM {
 	return &IM{client: c}
+}
+
+// List returns all private chats (ims) that can be seen by the logged in user.
+//
+// https://rocket.chat/docs/developer-guides/rest-api/im/list
+func (i *IM) List() ([]api.IM, error) {
+	request, _ := http.NewRequest("GET", i.client.getURL()+"/api/v1/im.list", nil)
+	response := new(ImsResponse)
+
+	if err := c.client.doRequest(request, response); err != nil {
+		return nil, err
+	}
+
+	return response.Ims, nil
 }
 
 // History AAA
