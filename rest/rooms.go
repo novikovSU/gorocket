@@ -28,7 +28,7 @@ type RoomResponse struct {
 
 // RoomsUploadOptions AAA
 type RoomsUploadOptions struct {
-	RoomID      string `json:"rid"`
+//	RoomID      string `json:"rid"`
 	File        string `json:"file"`
 	Message    string `json:"msg,omitempty"`
 	Description string `json:"description,omitempty"`
@@ -42,12 +42,12 @@ type RoomsUploadResponse struct {
 // Upload sends a message with a file to a room. The name of the room has to be not nil.
 //
 // https://rocket.chat/docs/developer-guides/rest-api/rooms/upload/
-func (r *Rooms) Upload(opts *RoomsUploadOptions) (*RoomsUploadResponse, error) {
+func (r *Rooms) Upload(roomID string, opts *RoomsUploadOptions) (*RoomsUploadResponse, error) {
 	data, err := json.Marshal(&opts)
 	if err != nil {
 		return nil, err
 	}
-	request, _ := http.NewRequest("POST", r.client.getURL()+"/api/v1/rooms.upload/"+opts.RoomID, bytes.NewBuffer(data))
+	request, _ := http.NewRequest("POST", r.client.getURL()+"/api/v1/rooms.upload/"+roomID, bytes.NewBuffer(data))
 
 	response := new(RoomsUploadResponse)
 	err = r.client.doRequest(request, response)
