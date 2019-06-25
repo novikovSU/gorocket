@@ -45,7 +45,7 @@ type Attachment struct {
 
 	Title             string `json:"title,omitempty"`
 	TitleLink         string `json:"title_link,omitempty"`
-	TitleLinkDownload string `json:"title_link_download,omitempty"`
+	TitleLinkDownload bool   `json:"title_link_download,omitempty"`
 
 	ImageURL string `json:"image_url,omitempty"`
 
