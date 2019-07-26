@@ -13,6 +13,12 @@ type Users struct {
 	client *Client
 }
 
+// UsersResponse is a technical struct
+type UsersResponse struct {
+	Success bool       `json:"success"`
+	Users   []api.User `json:"users"`
+}
+
 // Users AAA
 func (c *Client) Users() *Users {
 	return &Users{client: c}
@@ -28,6 +34,18 @@ type UsersInfoOptions struct {
 type UserInfoResponse struct {
 	User *api.User `json:"user"`
 	SuccessResponse
+}
+
+// List AAA
+func (u *Users) List() ([]api.User, error) {
+	request, _ := http.NewRequest("GET", u.client.getURL()+"/api/v1/users.list", nil)
+	response := new(UsersResponse)
+
+	if err := u.client.doRequest(request, response); err != nil {
+		return nil, err
+	}
+
+	return response.Users, nil
 }
 
 // Info AAA
