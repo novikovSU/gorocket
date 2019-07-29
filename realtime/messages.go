@@ -2,10 +2,11 @@ package realtime
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/Jeffail/gabs"
 	"github.com/gopackage/ddp"
 	"github.com/novikovSU/gorocket/api"
-	"log"
 )
 
 const (
@@ -19,8 +20,8 @@ const (
 // https://rocket.chat/docs/developer-guides/realtime-api/method-calls/send-message/
 func (c *Client) SendMessage(channel *api.Channel, text string) (*api.Message, error) {
 	m := api.Message{
-		Id:        c.newRandomId(),
-		ChannelId: channel.Id,
+		ID:        c.newRandomId(),
+		ChannelID: channel.ID,
 		Text:      text}
 
 	rawResponse, err := c.ddp.Call("sendMessage", m)
@@ -38,7 +39,7 @@ func (c *Client) SendMessage(channel *api.Channel, text string) (*api.Message, e
 // https://rocket.chat/docs/developer-guides/realtime-api/subscriptions/stream-room-messages/
 func (c *Client) SubscribeToMessageStream(channel *api.Channel) (chan api.Message, error) {
 
-	if err := c.ddp.Sub("stream-room-messages", channel.Id, send_added_event); err != nil {
+	if err := c.ddp.Sub("stream-room-messages", channel.ID, send_added_event); err != nil {
 		return nil, err
 	}
 
@@ -49,18 +50,13 @@ func (c *Client) SubscribeToMessageStream(channel *api.Channel) (chan api.Messag
 }
 
 func getMessageFromData(data interface{}) *api.Message {
-	document, _ := gabs.Consume(data)
+	document := gabs.Wrap(data)
 	return getMessageFromDocument(document)
 }
 
 func getMessagesFromUpdateEvent(update ddp.Update) []api.Message {
-	document, _ := gabs.Consume(update["args"])
-	args, err := document.Children()
-
-	if err != nil {
-		log.Printf("Event arguments are in an unexpected format: %v", err)
-		return make([]api.Message, 0)
-	}
+	document := gabs.Wrap(update["args"])
+	args := document.Children()
 
 	messages := make([]api.Message, len(args))
 
@@ -71,13 +67,17 @@ func getMessagesFromUpdateEvent(update ddp.Update) []api.Message {
 	return messages
 }
 func getMessageFromDocument(arg *gabs.Container) *api.Message {
+	tsUnix := int64(arg.Path("ts.$date").Data().(float64))
+	tsUnixMillis := tsUnix % 1000
+	tsUnix = tsUnix / 1000
+	ts := time.Unix(tsUnix, tsUnixMillis*1000000)
 	return &api.Message{
-		Id:        stringOrZero(arg.Path("_id").Data()),
-		ChannelId: stringOrZero(arg.Path("rid").Data()),
+		ID:        stringOrZero(arg.Path("_id").Data()),
+		ChannelID: stringOrZero(arg.Path("rid").Data()),
 		Text:      stringOrZero(arg.Path("msg").Data()),
-		Timestamp: stringOrZero(arg.Path("ts.$date").Data()),
+		Timestamp: &ts,
 		User: api.User{
-			Id:       stringOrZero(arg.Path("u._id").Data()),
+			ID:       stringOrZero(arg.Path("u._id").Data()),
 			UserName: stringOrZero(arg.Path("u.username").Data())}}
 }
 

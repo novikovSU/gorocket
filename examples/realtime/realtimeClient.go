@@ -9,7 +9,9 @@ import (
 
 func main() {
 	// Create new realtime client
-	c, _ := realtime.NewClient("127.0.0.1", "3000", false)
+	// Use "ws" as a proto for unencrypted connection
+	// and "wss" for encrypted
+	c, _ := realtime.NewClient("ws", "127.0.0.1", "3000", false)
 	// close the client
 	defer c.Close()
 
@@ -17,7 +19,7 @@ func main() {
 	c.Login(&api.UserCredentials{Email: "reatimeTest@mail.com", Name: "realtime", Password: "realtime"})
 
 	// Subscribe to the general channel
-	general := api.Channel{Id: "GENERAL"}
+	general := api.Channel{ID: "GENERAL"}
 	messageChannel, _ := c.SubscribeToMessageStream(&general)
 
 	// Send some messages
