@@ -58,19 +58,28 @@ func getMessagesFromUpdateEvent(update ddp.Update) []api.Message {
 	document := gabs.Wrap(update["args"])
 	args := document.Children()
 
-	messages := make([]api.Message, len(args))
+	messages := make([]api.Message, 0)
 
-	for i, arg := range args {
-		messages[i] = *getMessageFromDocument(arg)
+	for _, arg := range args {
+		msg := getMessageFromDocument(arg)
+		if msg != nil {
+			messages = append(messages, *msg)
+		}
 	}
 
 	return messages
 }
 func getMessageFromDocument(arg *gabs.Container) *api.Message {
-	tsUnix := int64(arg.Path("ts.$date").Data().(float64))
+	if arg.Path("_id").Data() == nil {
+		return nil
+	}
+	var ts time.Time
+	//log.Printf("DEBUG: gabs container: %+v\n", arg)
+	tsUnixFloat := arg.Path("ts.$date").Data().(float64)
+	tsUnix := int64(tsUnixFloat)
 	tsUnixMillis := tsUnix % 1000
 	tsUnix = tsUnix / 1000
-	ts := time.Unix(tsUnix, tsUnixMillis*1000000)
+	ts = time.Unix(tsUnix, tsUnixMillis*1000000)
 	return &api.Message{
 		ID:        stringOrZero(arg.Path("_id").Data()),
 		ChannelID: stringOrZero(arg.Path("rid").Data()),
@@ -78,6 +87,7 @@ func getMessageFromDocument(arg *gabs.Container) *api.Message {
 		Timestamp: &ts,
 		User: api.User{
 			ID:       stringOrZero(arg.Path("u._id").Data()),
+			Name:     stringOrZero(arg.Path("u.name").Data()),
 			UserName: stringOrZero(arg.Path("u.username").Data())}}
 }
 
