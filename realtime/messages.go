@@ -1,6 +1,7 @@
 package realtime
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -28,6 +29,10 @@ func (c *Client) SendMessage(channel *api.Channel, text string) (*api.Message, e
 
 	if err != nil {
 		return nil, err
+	}
+
+	if rawResponse == nil {
+		return nil, errors.New("can't send message")
 	}
 
 	return getMessageFromData(rawResponse.(map[string]interface{})), nil
