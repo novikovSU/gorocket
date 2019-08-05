@@ -38,6 +38,55 @@ func (c *Client) SendMessage(channel *api.Channel, text string) (*api.Message, e
 	return getMessageFromData(rawResponse.(map[string]interface{})), nil
 }
 
+// Load a history of a channel
+//
+// https://rocket.chat/docs/developer-guides/realtime-api/method-calls/load-history/
+// RealtimeHistoryRequest AAA
+
+type HistoryOptions struct {
+	RoomID     string
+	LatestTime *time.Time
+	Count      uint
+	OldestTime *time.Time
+}
+
+type rtHistDate struct {
+	datetime int64 `json:"$date"`
+}
+
+func (c *Client) LoadHistory(req *HistoryOptions) ([]api.Message, error) {
+	var LatestTime *rtHistDate
+	var OldestTime *rtHistDate
+	if req.LatestTime != nil {
+		LatestTime = &rtHistDate{datetime: req.LatestTime.Unix()}
+	}
+	if req.OldestTime != nil {
+		OldestTime = &rtHistDate{datetime: req.OldestTime.Unix()}
+	}
+	rawResponse, err := c.ddp.Call("loadHistory", req.RoomID, LatestTime, req.Count, OldestTime)
+	if err != nil {
+		return nil, err
+	}
+
+	if rawResponse == nil {
+		return nil, errors.New("can't load history")
+	}
+
+	resp := gabs.Wrap(rawResponse)
+	msgs := resp.S("messages").Children()
+
+	messages := make([]api.Message, 0)
+
+	for _, rawmsg := range msgs {
+		msg := getMessageFromDocument(rawmsg)
+		if msg != nil {
+			messages = append(messages, *msg)
+		}
+	}
+
+	return messages, nil
+}
+
 // Subscribes to the message updates of a channel
 // Returns a buffered channel
 //
